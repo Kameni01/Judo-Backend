@@ -14,7 +14,7 @@ class News(models.Model):
     mainimg = models.ImageField(verbose_name='Фото', upload_to='Main/MainImg', height_field=None, width_field=None, max_length=256, blank=True, null=True)
     title = models.CharField(verbose_name='Заголовок', max_length=100, db_index=True)
     text = models.TextField(verbose_name='Текст', null=True, blank=True)
-    file = models.FileField(verbose_name='Файл', upload_to='Main/files', height_field=None, max_length=256, blank=True, null=True)
+    file = models.FileField(verbose_name='Файл', upload_to='Main/files', max_length=256, blank=True, null=True)
     created = models.DateTimeField(verbose_name='Дата создания', auto_now_add=True)
     news_type = models.IntegerField(verbose_name='Вид события', default=NEWS, choices=TYPES)
 
@@ -55,7 +55,7 @@ class Achievements(models.Model):
 
     title = models.CharField(verbose_name='Заголовок', max_length=100, db_index=True)
     medal = models.IntegerField(verbose_name='Вид медали', default=GOLD, choices=MEDALS)
-    owner = models.ForeignKey(SportCard, verbose_name='Владелец достижения')
+    owner = models.ForeignKey(SportCard, verbose_name='Владелец достижения', on_delete=models.CASCADE)
 
     class Meta:
         verbose_name = "Достижение"
@@ -115,10 +115,10 @@ class TrenerCard(models.Model):
     family = models.CharField(verbose_name='Фамилия', max_length=100, db_index=True)
     patronymic = models.CharField(verbose_name='Отчество', max_length=100)
     photo = models.ImageField(verbose_name='Фотография тренера', upload_to='Main/Photos', height_field=None, width_field=None, max_length=256, blank=True, null=True)
-    education = models.ForeignKey(Education, verbose_name='Уровень образования')
-    qualification = models.ForeignKey(Qualification, verbose_name='Квалификация')
-    academic_degree = models.ForeignKey(AcademicDegree, verbose_name='Ученая степень')
-    experience = models.IntegerField(verbose_name='Стаж работы тренером', max_length=2)
+    education = models.ForeignKey(Education, verbose_name='Уровень образования', on_delete=models.CASCADE)
+    qualification = models.ForeignKey(Qualification, verbose_name='Квалификация', on_delete=models.CASCADE)
+    academic_degree = models.ForeignKey(AcademicDegree, verbose_name='Ученая степень', on_delete=models.CASCADE)
+    experience = models.IntegerField(verbose_name='Стаж работы тренером')
 
     class Meta:
         verbose_name = "Карточка тренера"
@@ -134,10 +134,10 @@ class Materials(models.Model):
     """Класс статей из учебных материалов"""
     title = models.CharField(verbose_name='Название статьи', max_length=100, db_index=True)
     text = models.TextField(verbose_name='Текст', null=True, blank=True)
-    file = models.FileField(verbose_name='Файл', upload_to='Main/Materials', height_field=None, max_length=256, blank=True, null=True)
+    file = models.FileField(verbose_name='Файл', upload_to='Main/Materials', max_length=256, blank=True, null=True)
     created = models.DateTimeField(verbose_name='Дата создания статьи', auto_now_add=True)
     video_title = models.CharField(verbose_name='Заголовок', max_length=100, null=True, blank=True)
-    video = models.FileField(verbose_name='Видео', upload_to='Main/Videos', height_field=None, max_length=256, blank=True, null=True)
+    video = models.FileField(verbose_name='Видео', upload_to='Main/Videos', max_length=256, blank=True, null=True)
     comment = models.CharField(verbose_name='Заголовок', max_length=300, null=True, blank=True)
 
     class Meta:
@@ -168,9 +168,9 @@ class VideoAlbums(models.Model):
 class VideoGalerry(models.Model):
     title = models.CharField(verbose_name='Название видео', max_length=100, db_index=True)
     created = models.DateField(verbose_name='Дата добавления видео', auto_now_add=True)
-    video = models.FileField(verbose_name='Видео', upload_to='Main/VideoGallery', height_field=None, max_length=256)
+    video = models.FileField(verbose_name='Видео', upload_to='Main/VideoGallery', max_length=256)
     descriptions = models.TextField(verbose_name='Описание видео', null=True, blank=True)
-    album = models.ForeignKey(VideoAlbums, verbose_name='Альбом', null=True, blank=True)
+    album = models.ForeignKey(VideoAlbums, verbose_name='Альбом', null=True, blank=True, on_delete=models.CASCADE)
 
     class Meta:
         verbose_name = "Видеозапись"
