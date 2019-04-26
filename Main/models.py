@@ -1,22 +1,20 @@
 from django.db import models
 from django.contrib.auth import get_user_model
-from django.urls import reverse
-
-User = get_user_model()
 
 
 class News(models.Model):
     """Класс новостей"""
-    NEWS = 0
-    EVENT = 1
+    NEWS = 'Новость'
+    EVENT = 'Грядущее событие'
     TYPES = ((NEWS, 'Новость',), (EVENT, 'Грядущее событие',) )
 
     mainimg = models.ImageField(verbose_name='Фото', upload_to='Main/MainImg', height_field=None, width_field=None, max_length=256, blank=True, null=True)
     title = models.CharField(verbose_name='Заголовок', max_length=100, db_index=True)
+    anons = models.CharField(verbose_name='Краткое содержание', max_length=150, null=True, blank=True)
     text = models.TextField(verbose_name='Текст', null=True, blank=True)
     file = models.FileField(verbose_name='Файл', upload_to='Main/files', max_length=256, blank=True, null=True)
     created = models.DateTimeField(verbose_name='Дата создания', auto_now_add=True)
-    news_type = models.IntegerField(verbose_name='Вид события', default=NEWS, choices=TYPES)
+    news_type = models.CharField(verbose_name='Вид события', default=NEWS, choices=TYPES, max_length=50)
 
     class Meta:
         verbose_name = "Новость"
@@ -48,13 +46,13 @@ class SportCard(models.Model):
 
 class Achievements(models.Model):
     """Класс достижений спортсменов"""
-    GOLD = 0
-    SILVER = 1
-    BRONZE = 2
+    GOLD = 'Золотая'
+    SILVER = 'Серебрянная'
+    BRONZE = 'Бронзовая'
     MEDALS = ((GOLD, 'Золотая',), (SILVER, 'Серебрянная',), (BRONZE, 'Бронзовая',))
 
-    title = models.CharField(verbose_name='Заголовок', max_length=100, db_index=True)
-    medal = models.IntegerField(verbose_name='Вид медали', default=GOLD, choices=MEDALS)
+    title = models.CharField(verbose_name='Достижение', max_length=100, db_index=True)
+    medal = models.CharField(verbose_name='Вид медали', default=GOLD, choices=MEDALS, max_length=100)
     owner = models.ForeignKey(SportCard, verbose_name='Владелец достижения', on_delete=models.CASCADE)
 
     class Meta:
@@ -126,19 +124,25 @@ class TrenerCard(models.Model):
         ordering = ["family"]
 
     def __str__(self):
-        return self.title
+        return self.family
 
 
 
 class Materials(models.Model):
     """Класс статей из учебных материалов"""
+    FOR_KIDS = 'Для детей'
+    FOR_PARENTES = 'Для родителей'
+    OTHER = 'Другое'
+    TYPE = ((FOR_KIDS, 'Для детей',), (FOR_PARENTES, 'Для родителей',), (OTHER, 'Другое'))
+
     title = models.CharField(verbose_name='Название статьи', max_length=100, db_index=True)
     text = models.TextField(verbose_name='Текст', null=True, blank=True)
     file = models.FileField(verbose_name='Файл', upload_to='Main/Materials', max_length=256, blank=True, null=True)
     created = models.DateTimeField(verbose_name='Дата создания статьи', auto_now_add=True)
-    video_title = models.CharField(verbose_name='Заголовок', max_length=100, null=True, blank=True)
+    video_title = models.CharField(verbose_name='Название видео', max_length=100, null=True, blank=True)
     video = models.FileField(verbose_name='Видео', upload_to='Main/Videos', max_length=256, blank=True, null=True)
-    comment = models.CharField(verbose_name='Заголовок', max_length=300, null=True, blank=True)
+    comment = models.CharField(verbose_name='Комментарий', max_length=300, null=True, blank=True)
+    type = models.CharField(verbose_name='Для кого статья', default=OTHER, choices=TYPE, max_length=100)
 
     class Meta:
         verbose_name = "Статья из учебных материалов"
