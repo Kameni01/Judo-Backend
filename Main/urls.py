@@ -17,7 +17,8 @@ urlpatterns = [
     path('v-albums/', VideoAlbumsList.as_view(), name="videoalbums-list"),
     path('v-albums/<int:id>', VideoAlbumsDetail.as_view(), name="videoalbums-detail"),
     path('v-gallery/', VideoGalerryList.as_view(), name="videogallery-list"),
-    path('v-gallery/<int:id>', VideoGalerryDetail.as_view(), name="videogallery-detail"),
+    path('v-gallery/<int:id>', VideoGalleryDetail.as_view(), name="videogallery-detail"),
+    path('v-gallery/<int:id>/album', VideoGalerryAlbum.as_view(), name="videogallery-album"),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 

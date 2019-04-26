@@ -3,7 +3,6 @@ from .models import *
 
 
 
-# class NewsSerializers(serializers.Serializer):
 class NewsListSerializer(serializers.ModelSerializer):
     class Meta:
         model = News
@@ -84,6 +83,8 @@ class VideoAlbumsFullSerializer(serializers.ModelSerializer):
 class VideoGalerryFullSerializer(serializers.ModelSerializer):
     id = serializers.IntegerField(label='ID', read_only=True)
     title = serializers.CharField(required=False, allow_blank=True, max_length=100)
-    video = serializers.FilePathField(match=None, recursive=False, allow_files=True, allow_folders=False, required=None, **kwargs)
     description = serializers.CharField(required=False, allow_blank=True, max_length=1000)
     album = serializers.CharField(required=False, allow_blank=True, max_length=100)
+    class Meta:
+        model = VideoGalerry
+        fields = ('id', 'title', 'video', 'description', 'album')

@@ -145,7 +145,15 @@ class VideoAlbumsDetail(APIView):
 
 class VideoGalerryList(APIView):
     def get(self, request, format=None):
-        obj = VideoGallery.objects.all()
+        obj = VideoGalerry.objects.all()
+        serializer = VideoGalerryFullSerializer(obj, many=True)
+        return Response(serializer.data)
+
+
+
+class VideoGalerryAlbum(APIView):
+    def get(self, request, id, format=None):
+        obj = VideoGalerry.objects.filter(album_id=id)
         serializer = VideoGalerryFullSerializer(obj, many=True)
         return Response(serializer.data)
 
@@ -154,8 +162,8 @@ class VideoGalerryList(APIView):
 class VideoGalleryDetail(APIView):
     def get_object(self, id):
         try:
-            return VideoGallery.objects.get(id=id)
-        except VideoAlbums.DoesNotExist:
+            return VideoGalerry.objects.get(id=id)
+        except VideoGalerry.DoesNotExist:
             raise Http404
 
     def get(self, request, id, format=None):
