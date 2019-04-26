@@ -7,18 +7,31 @@ from .views import *
 urlpatterns = [
     path('news/', NewsList.as_view(), name="news-list"),
     path('news/<int:id>', NewsDetail.as_view(), name="news-detail"),
+
     path('sportcard/', SportCardList.as_view(), name="sportcard-list"),
     path('sportcard/<int:id>', SportCardDetail.as_view(), name="sportcard-detail"),
+
     path('achiv/<int:id>', AchievementsDetail.as_view(), name="achievements-detail"),
+
     path('trenercard/', TrenerCardList.as_view(), name="trenercard-list"),
     path('trenercard/<int:id>', TrenerCardDetail.as_view(), name="trenercard-detail"),
+
     path('materials/', MaterialsList.as_view(), name="materials-list"),
     path('materials/<int:id>', MaterialsDetail.as_view(), name="materials-detail"),
+
     path('v-albums/', VideoAlbumsList.as_view(), name="videoalbums-list"),
     path('v-albums/<int:id>', VideoAlbumsDetail.as_view(), name="videoalbums-detail"),
-    path('v-gallery/', VideoGalerryList.as_view(), name="videogallery-list"),
+
+    path('v-gallery/', VideoGalleryList.as_view(), name="videogallery-list"),
     path('v-gallery/<int:id>', VideoGalleryDetail.as_view(), name="videogallery-detail"),
-    path('v-gallery/<int:id>/album', VideoGalerryAlbum.as_view(), name="videogallery-album"),
+    path('v-gallery/<int:id>/album', VideoGalleryAlbum.as_view(), name="videogallery-album"),
+
+    path('p-albums/', PhotoAlbumsList.as_view(), name="photoalbums-list"),
+    path('p-albums/<int:id>', PhotoAlbumsDetail.as_view(), name="photoalbums-detail"),
+    
+    path('p-gallery/', PhotoGalleryList.as_view(), name="photogallery-list"),
+    path('p-gallery/<int:id>', PhotoGalleryDetail.as_view(), name="photogallery-detail"),
+    path('p-gallery/<int:id>/album', PhotoGalleryAlbum.as_view(), name="photogallery-album"),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 

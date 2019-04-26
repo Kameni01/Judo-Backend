@@ -3,10 +3,10 @@ from django_summernote.admin import SummernoteModelAdmin
 
 from .models import *
 
-# class NewsAdmin(SummernoteModelAdmin):
-#     summer_note_fields = ('body', )
+class NewsAdmin(SummernoteModelAdmin):
+    summer_note_fields = ('text', )
 
-admin.site.register(News)
+admin.site.register(News, NewsAdmin)
 admin.site.register(SportCard)
 admin.site.register(Achievements)
 admin.site.register(Education)
@@ -15,4 +15,4 @@ admin.site.register(AcademicDegree)
 admin.site.register(TrenerCard)
 admin.site.register(Materials)
 admin.site.register(VideoAlbums)
-admin.site.register(VideoGalerry)
+admin.site.register(VideoGallery)

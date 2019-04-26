@@ -99,13 +99,21 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/2.1/topics/i18n/
 
-LANGUAGE_CODE = 'ru-ru'
+LANGUAGE_CODE = 'ru-RU'
 
 TIME_ZONE = 'UTC'
 
 USE_I18N = True
 
-USE_L10N = True
+USE_L10N = False
+
+# from django.conf import settings
+# from datetime import datetime
+# from django.utils import dateformat
+# DATE_FORMAT = 'd E Y'
+# Форматирование даты
+# formatted_date = dateformat.format(datetime.now(), settings.DATE_FORMAT)
+
 
 USE_TZ = True
 

@@ -143,18 +143,18 @@ class VideoAlbumsDetail(APIView):
 
 
 
-class VideoGalerryList(APIView):
+class VideoGalleryList(APIView):
     def get(self, request, format=None):
-        obj = VideoGalerry.objects.all()
-        serializer = VideoGalerryFullSerializer(obj, many=True)
+        obj = VideoGallery.objects.all()
+        serializer = VideoGalleryFullSerializer(obj, many=True)
         return Response(serializer.data)
 
 
 
-class VideoGalerryAlbum(APIView):
+class VideoGalleryAlbum(APIView):
     def get(self, request, id, format=None):
-        obj = VideoGalerry.objects.filter(album_id=id)
-        serializer = VideoGalerryFullSerializer(obj, many=True)
+        obj = VideoGallery.objects.filter(album_id=id)
+        serializer = VideoGalleryFullSerializer(obj, many=True)
         return Response(serializer.data)
 
 
@@ -162,11 +162,63 @@ class VideoGalerryAlbum(APIView):
 class VideoGalleryDetail(APIView):
     def get_object(self, id):
         try:
-            return VideoGalerry.objects.get(id=id)
-        except VideoGalerry.DoesNotExist:
+            return VideoGallery.objects.get(id=id)
+        except VideoGallery.DoesNotExist:
             raise Http404
 
     def get(self, request, id, format=None):
         obj = self.get_object(id)
-        serializer = VideoGalerryFullSerializer(obj)
+        serializer = VideoGalleryFullSerializer(obj)
+        return Response(serializer.data)
+
+
+
+class PhotoAlbumsList(APIView):
+    def get(self, request, format=None):
+        obj = PhotoAlbums.objects.all()
+        serializer = PhotoAlbumsFullSerializer(obj, many=True)
+        return Response(serializer.data)
+
+
+
+class PhotoAlbumsDetail(APIView):
+    def get_object(self, id):
+        try:
+            return PhotoAlbums.objects.get(id=id)
+        except PhotoAlbums.DoesNotExist:
+            raise Http404
+
+    def get(self, request, id, format=None):
+        obj = self.get_object(id)
+        serializer = PhotoAlbumsFullSerializer(obj)
+        return Response(serializer.data)
+
+
+
+class PhotoGalleryList(APIView):
+    def get(self, request, format=None):
+        obj = PhotoGallery.objects.all()
+        serializer = PhotoGalleryFullSerializer(obj, many=True)
+        return Response(serializer.data)
+
+
+
+class PhotoGalleryAlbum(APIView):
+    def get(self, request, id, format=None):
+        obj = PhotoGallery.objects.filter(album_id=id)
+        serializer = PhotoGalleryFullSerializer(obj, many=True)
+        return Response(serializer.data)
+
+
+
+class PhotoGalleryDetail(APIView):
+    def get_object(self, id):
+        try:
+            return PhotoGallery.objects.get(id=id)
+        except PhotoGallery.DoesNotExist:
+            raise Http404
+
+    def get(self, request, id, format=None):
+        obj = self.get_object(id)
+        serializer = PhotoGalleryFullSerializer(obj)
         return Response(serializer.data)

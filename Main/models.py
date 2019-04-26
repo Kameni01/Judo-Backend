@@ -13,13 +13,13 @@ class News(models.Model):
     anons = models.CharField(verbose_name='Краткое содержание', max_length=150, null=True, blank=True)
     text = models.TextField(verbose_name='Текст', null=True, blank=True)
     file = models.FileField(verbose_name='Файл', upload_to='Main/files', max_length=256, blank=True, null=True)
-    created = models.DateTimeField(verbose_name='Дата создания', auto_now_add=True)
+    created = models.DateField(verbose_name='Дата создания', auto_now_add=True)
     news_type = models.CharField(verbose_name='Вид события', default=NEWS, choices=TYPES, max_length=50)
 
     class Meta:
         verbose_name = "Новость"
         verbose_name_plural = "Новости"
-        ordering = ["created"]
+        ordering = ["-id"]
 
     def __str__(self):
         return self.title
@@ -37,7 +37,7 @@ class SportCard(models.Model):
     class Meta:
         verbose_name = "Карточка спортсмена"
         verbose_name_plural = "Карточки спортсменов"
-        ordering = ["family"]
+        ordering = ["-id"]
 
     def __str__(self):
         return self.family
@@ -58,7 +58,7 @@ class Achievements(models.Model):
     class Meta:
         verbose_name = "Достижение"
         verbose_name_plural = "Достижения"
-        ordering = ["title"]
+        ordering = ["-id"]
 
     def __str__(self):
         return self.title
@@ -121,7 +121,7 @@ class TrenerCard(models.Model):
     class Meta:
         verbose_name = "Карточка тренера"
         verbose_name_plural = "Карточки тренеров"
-        ordering = ["family"]
+        ordering = ["-id"]
 
     def __str__(self):
         return self.family
@@ -138,7 +138,7 @@ class Materials(models.Model):
     title = models.CharField(verbose_name='Название статьи', max_length=100, db_index=True)
     text = models.TextField(verbose_name='Текст', null=True, blank=True)
     file = models.FileField(verbose_name='Файл', upload_to='Main/Materials', max_length=256, blank=True, null=True)
-    created = models.DateTimeField(verbose_name='Дата создания статьи', auto_now_add=True)
+    created = models.DateField(verbose_name='Дата создания статьи', auto_now_add=True)
     video_title = models.CharField(verbose_name='Название видео', max_length=100, null=True, blank=True)
     video = models.FileField(verbose_name='Видео', upload_to='Main/Videos', max_length=256, blank=True, null=True)
     comment = models.CharField(verbose_name='Комментарий', max_length=300, null=True, blank=True)
@@ -147,7 +147,7 @@ class Materials(models.Model):
     class Meta:
         verbose_name = "Статья из учебных материалов"
         verbose_name_plural = "Статьи из учебных материалов"
-        ordering = ["created"]
+        ordering = ["-id"]
 
     def __str__(self):
         return self.title
@@ -162,14 +162,14 @@ class VideoAlbums(models.Model):
     class Meta:
         verbose_name = "Альбом видое"
         verbose_name_plural = "Альбомы видео"
-        ordering = ["created"]
+        ordering = ["-id"]
 
     def __str__(self):
         return self.title
 
 
 
-class VideoGalerry(models.Model):
+class VideoGallery(models.Model):
     title = models.CharField(verbose_name='Название видео', max_length=100, db_index=True)
     created = models.DateField(verbose_name='Дата добавления видео', auto_now_add=True)
     video = models.FileField(verbose_name='Видео', upload_to='Main/VideoGallery', max_length=256, null=True, blank=True)
@@ -179,7 +179,43 @@ class VideoGalerry(models.Model):
     class Meta:
         verbose_name = "Видеозапись"
         verbose_name_plural = "Видеозаписи"
-        ordering = ["created"]
+        ordering = ["-id"]
+
+    def __str__(self):
+        return self.title
+
+
+
+class PhotoAlbums(models.Model):
+    """Класс альбомов видеогалереи"""
+    title = models.CharField(verbose_name='Название альбома', max_length=100, db_index=True)
+    created = models.DateField(verbose_name='Дата создание альбома', auto_now_add=True)
+
+    class Meta:
+        verbose_name = "Фотоальбом"
+        verbose_name_plural = "Фотоальбомы"
+        ordering = ["-id"]
+
+    def __str__(self):
+        return self.title
+
+
+
+class PhotoGallery(models.Model):
+    title = models.CharField(verbose_name='Название фото', max_length=100,
+    db_index=True)
+    created = models.DateField(verbose_name='Дата добавления фото', auto_now_add=True)
+    photo = models.ImageField(verbose_name='Фото', upload_to='Main/PhotoGallery',
+    height_field=None, width_field=None, max_length=256, blank=True, null=True)
+    descriptions = models.TextField(verbose_name='Описание фото', null=True,
+    blank=True)
+    album = models.ForeignKey(PhotoAlbums, verbose_name='Альбом', null=True,
+    blank=True, on_delete=models.CASCADE)
+
+    class Meta:
+        verbose_name = "Фотография"
+        verbose_name_plural = "Фотографии"
+        ordering = ["-id"]
 
     def __str__(self):
         return self.title
