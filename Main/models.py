@@ -174,11 +174,16 @@ class VideoAlbums(models.Model):
 
 
 class VideoGallery(models.Model):
-    title = models.CharField(verbose_name='Название видео', max_length=100, db_index=True)
-    created = models.DateField(verbose_name='Дата добавления видео', auto_now_add=True)
-    video = models.FileField(verbose_name='Видео', upload_to='Main/VideoGallery', max_length=256, null=True, blank=True)
-    descriptions = models.TextField(verbose_name='Описание видео', null=True, blank=True)
-    album = models.ForeignKey(VideoAlbums, verbose_name='Альбом', null=True, blank=True, on_delete=models.CASCADE)
+    title = models.CharField(verbose_name='Название видео', max_length=100,
+    db_index=True)
+    created = models.DateField(verbose_name='Дата добавления видео',
+    auto_now_add=True)
+    video = models.FileField(verbose_name='Видео',
+    upload_to='Main/VideoGallery', max_length=256, null=True, blank=True)
+    descriptions = models.TextField(verbose_name='Описание видео',
+    null=True, blank=True)
+    album = models.ForeignKey(VideoAlbums, verbose_name='Альбом',
+    null=True, blank=True, on_delete=models.CASCADE)
 
     class Meta:
         verbose_name = "Видеозапись"
