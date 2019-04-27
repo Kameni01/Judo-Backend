@@ -39,6 +39,22 @@ class NewsDetail(APIView):
 
 
 
+class NewsNEWS(APIView):
+    def get(self, request, format=None):
+        obj = News.objects.filter(news_type='Новость')
+        serializer = NewsListSerializer(obj, many=True)
+        return Response(serializer.data)
+
+
+
+class NewsEVENTS(APIView):
+    def get(self, request, format=None):
+        obj = News.objects.filter(news_type='Грядущее событие')
+        serializer = NewsListSerializer(obj, many=True)
+        return Response(serializer.data)
+
+
+
 class SportCardList(APIView):
     def get(self, request, format=None):
         obj = SportCard.objects.all()

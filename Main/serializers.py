@@ -3,10 +3,10 @@ from django.conf import settings
 from .models import *
 from rest_framework.settings import api_settings
 
-# dateformat = ['%d %B %Y']
-# format=api_settings.DATE_FORMAT,
+
 class NewsListSerializer(serializers.ModelSerializer):
-    created = serializers.DateField(input_formats=None, format='%d %B %Y')
+    # created = serializers.DateField(input_formats=None, format='%d %B %Y')
+    created = serializers.DateField(input_formats=None, format='%d-%m-%Y')
     class Meta:
         model = News
         fields = ('id', 'mainimg', 'title', 'anons', 'created', 'news_type')
@@ -14,7 +14,7 @@ class NewsListSerializer(serializers.ModelSerializer):
 
 
 class NewsFullSerializer(serializers.ModelSerializer):
-    created = serializers.DateField(input_formats=None, format='%d %m %Y')
+    created = serializers.DateField(input_formats=None, format='%d-%m-%Y')
     class Meta:
         model = News
         fields = ('id', 'mainimg', 'title', 'text', 'file', 'created', 'news_type')
@@ -70,7 +70,7 @@ class MaterialsListSerializer(serializers.ModelSerializer):
 
 
 class MaterialsFullSerializer(serializers.ModelSerializer):
-    created = serializers.DateField(input_formats=None, format='%d %m %Y')
+    created = serializers.DateField(input_formats=None, format='%d-%m-%Y')
     class Meta:
         model = Materials
         fields = ('id', 'title', 'text', 'file', 'created', 'video_title',
@@ -79,7 +79,7 @@ class MaterialsFullSerializer(serializers.ModelSerializer):
 
 
 class VideoAlbumsFullSerializer(serializers.ModelSerializer):
-    created = serializers.DateField(input_formats=None, format='%d %m %Y')
+    created = serializers.DateField(input_formats=None, format='%d-%m-%Y')
     class Meta:
         model = VideoAlbums
         fields = ('id', 'title', 'created')
@@ -98,7 +98,7 @@ class VideoGalleryFullSerializer(serializers.ModelSerializer):
 
 
 class PhotoAlbumsFullSerializer(serializers.ModelSerializer):
-    created = serializers.DateField(input_formats=None, format='%d %m %Y')
+    created = serializers.DateField(input_formats=None, format='%d-%m-%Y')
     class Meta:
         model = VideoAlbums
         fields = ('id', 'title', 'created')
@@ -111,5 +111,5 @@ class PhotoGalleryFullSerializer(serializers.ModelSerializer):
     description = serializers.CharField(required=False, allow_blank=True, max_length=1000)
     album = serializers.CharField(required=False, allow_blank=True, max_length=100)
     class Meta:
-        model = VideoGallery
+        model = PhotoGallery
         fields = ('id', 'title', 'photo', 'description', 'album')

@@ -8,13 +8,17 @@ class News(models.Model):
     EVENT = 'Грядущее событие'
     TYPES = ((NEWS, 'Новость',), (EVENT, 'Грядущее событие',) )
 
-    mainimg = models.ImageField(verbose_name='Фото', upload_to='Main/MainImg', height_field=None, width_field=None, max_length=256, blank=True, null=True)
+    mainimg = models.ImageField(verbose_name='Фото', upload_to='Main/MainImg',
+    width_field=None, max_length=256, blank=True, null=True)
     title = models.CharField(verbose_name='Заголовок', max_length=100, db_index=True)
-    anons = models.CharField(verbose_name='Краткое содержание', max_length=150, null=True, blank=True)
+    anons = models.CharField(verbose_name='Краткое содержание', max_length=150,
+    null=True, blank=True)
     text = models.TextField(verbose_name='Текст', null=True, blank=True)
-    file = models.FileField(verbose_name='Файл', upload_to='Main/files', max_length=256, blank=True, null=True)
+    file = models.FileField(verbose_name='Файл', upload_to='Main/files',
+    max_length=None, blank=True, null=True)
     created = models.DateField(verbose_name='Дата создания', auto_now_add=True)
-    news_type = models.CharField(verbose_name='Вид события', default=NEWS, choices=TYPES, max_length=50)
+    news_type = models.CharField(verbose_name='Вид события', default=NEWS,
+    choices=TYPES, max_length=50)
 
     class Meta:
         verbose_name = "Новость"

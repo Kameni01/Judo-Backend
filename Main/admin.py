@@ -6,6 +6,13 @@ from .models import *
 class NewsAdmin(SummernoteModelAdmin):
     summer_note_fields = ('text', )
 
+
+
+class MaterialsAdmin(SummernoteModelAdmin):
+    summer_note_fields = ('text', )
+
+
+
 admin.site.register(News, NewsAdmin)
 admin.site.register(SportCard)
 admin.site.register(Achievements)
@@ -13,6 +20,8 @@ admin.site.register(Education)
 admin.site.register(Qualification)
 admin.site.register(AcademicDegree)
 admin.site.register(TrenerCard)
-admin.site.register(Materials)
+admin.site.register(Materials, MaterialsAdmin)
 admin.site.register(VideoAlbums)
 admin.site.register(VideoGallery)
+admin.site.register(PhotoAlbums)
+admin.site.register(PhotoGallery)

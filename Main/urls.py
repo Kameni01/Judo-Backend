@@ -7,6 +7,8 @@ from .views import *
 urlpatterns = [
     path('news/', NewsList.as_view(), name="news-list"),
     path('news/<int:id>', NewsDetail.as_view(), name="news-detail"),
+    path('news/NEWS', NewsNEWS.as_view(), name="news-NEWS"),
+    path('news/EVENTS', NewsEVENTS.as_view(), name="news-EVENTS"),
 
     path('sportcard/', SportCardList.as_view(), name="sportcard-list"),
     path('sportcard/<int:id>', SportCardDetail.as_view(), name="sportcard-detail"),
@@ -28,7 +30,7 @@ urlpatterns = [
 
     path('p-albums/', PhotoAlbumsList.as_view(), name="photoalbums-list"),
     path('p-albums/<int:id>', PhotoAlbumsDetail.as_view(), name="photoalbums-detail"),
-    
+
     path('p-gallery/', PhotoGalleryList.as_view(), name="photogallery-list"),
     path('p-gallery/<int:id>', PhotoGalleryDetail.as_view(), name="photogallery-detail"),
     path('p-gallery/<int:id>/album', PhotoGalleryAlbum.as_view(), name="photogallery-album"),
