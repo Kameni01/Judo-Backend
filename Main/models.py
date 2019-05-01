@@ -1,5 +1,10 @@
 from django.db import models
 from django.contrib.auth import get_user_model
+import PIL
+from PIL import Image
+from imagekit.models.fields import ImageSpecField
+from imagekit.processors import ResizeToFit, Adjust, ResizeToFill
+
 
 
 class News(models.Model):
@@ -50,9 +55,9 @@ class SportCard(models.Model):
 
 class Achievements(models.Model):
     """Класс достижений спортсменов"""
-    GOLD = 'Золотая'
-    SILVER = 'Серебрянная'
-    BRONZE = 'Бронзовая'
+    GOLD = 'gold'
+    SILVER = 'silver'
+    BRONZE = 'bronze'
     MEDALS = ((GOLD, 'Золотая',), (SILVER, 'Серебрянная',), (BRONZE, 'Бронзовая',))
 
     title = models.CharField(verbose_name='Достижение', max_length=100, db_index=True)
@@ -216,6 +221,9 @@ class PhotoGallery(models.Model):
     created = models.DateField(verbose_name='Дата добавления фото', auto_now_add=True)
     photo = models.ImageField(verbose_name='Фото', upload_to='Main/PhotoGallery',
     height_field=None, width_field=None, max_length=256, blank=True, null=True)
+    photo_s = ImageSpecField([Adjust(contrast=1.2, sharpness=1.1),
+            ResizeToFill(200, 200)], source='photo',
+            format='JPEG', options={'quality': 90})
     descriptions = models.TextField(verbose_name='Описание фото', null=True,
     blank=True)
     album = models.ForeignKey(PhotoAlbums, verbose_name='Альбом', null=True,
@@ -225,6 +233,11 @@ class PhotoGallery(models.Model):
         verbose_name = "Фотография"
         verbose_name_plural = "Фотографии"
         ordering = ["-id"]
+
+
+    def save(self, *args, **kwargs):
+
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return self.title

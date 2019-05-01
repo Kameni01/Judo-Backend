@@ -10,30 +10,31 @@ urlpatterns = [
     path('news/NEWS', NewsNEWS.as_view(), name="news-NEWS"),
     path('news/EVENTS', NewsEVENTS.as_view(), name="news-EVENTS"),
 
-    path('sportcard/', SportCardList.as_view(), name="sportcard-list"),
+    path('sportcard/human', SportCardList.as_view(), name="sportcard-list"),
     path('sportcard/<int:id>', SportCardDetail.as_view(), name="sportcard-detail"),
+    path('sportcard/human/<int:id>', SportCardDetail_v2.as_view(), name="sportcard-detail_v2"),
 
     path('achiv/<int:id>', AchievementsDetail.as_view(), name="achievements-detail"),
 
-    path('trenercard/', TrenerCardList.as_view(), name="trenercard-list"),
-    path('trenercard/<int:id>', TrenerCardDetail.as_view(), name="trenercard-detail"),
+    path('sportcard/staff', TrenerCardList.as_view(), name="trenercard-list"),
+    path('sportcard/staff/<int:id>', TrenerCardDetail.as_view(), name="trenercard-detail"),
 
     path('materials/', MaterialsList.as_view(), name="materials-list"),
     path('materials/<int:id>', MaterialsDetail.as_view(), name="materials-detail"),
 
     path('v-albums/', VideoAlbumsList.as_view(), name="videoalbums-list"),
     path('v-albums/<int:id>', VideoAlbumsDetail.as_view(), name="videoalbums-detail"),
+    path('v-albums/items/<int:id>', VideoAlbumsItems.as_view(), name="videoalbums-Items"),
 
     path('v-gallery/', VideoGalleryList.as_view(), name="videogallery-list"),
-    path('v-gallery/<int:id>', VideoGalleryDetail.as_view(), name="videogallery-detail"),
-    path('v-gallery/<int:id>/album', VideoGalleryAlbum.as_view(), name="videogallery-album"),
+    path('v-gallery/album/<int:id>/<int:pk>', VideoGalleryDetail.as_view(), name="videogallery-album"),
 
     path('p-albums/', PhotoAlbumsList.as_view(), name="photoalbums-list"),
     path('p-albums/<int:id>', PhotoAlbumsDetail.as_view(), name="photoalbums-detail"),
 
     path('p-gallery/', PhotoGalleryList.as_view(), name="photogallery-list"),
     path('p-gallery/<int:id>', PhotoGalleryDetail.as_view(), name="photogallery-detail"),
-    path('p-gallery/<int:id>/album', PhotoGalleryAlbum.as_view(), name="photogallery-album"),
+    path('p-gallery/album/<int:id>', PhotoGalleryAlbum_v2.as_view(), name="photogallery-album"),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 

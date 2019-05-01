@@ -51,6 +51,7 @@ class PhotoGalleryAdmin(SummernoteModelAdmin):
     list_display = ("title", "created", 'album')
     list_editable = ('album', )
     search_fields = ("title", "album")
+    # exclude = ('photo_s', )
 
 
 

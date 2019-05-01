@@ -9,7 +9,7 @@ SECRET_KEY = '0_c7octo2n)=wb3r=ak91dajn25fc&)n!$7=efo%(9h(uy+_wd'
 
 DEBUG = True
 
-ALLOWED_HOSTS = ['192.168.0.100', '127.0.0.1']
+ALLOWED_HOSTS = ['82.193.139.237', '192.168.0.100', '127.0.0.1']
 
 
 INSTALLED_APPS = [
@@ -22,10 +22,14 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_summernote',
     'rest_framework',
+    'imagekit',
+    'corsheaders',
     'Main',
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.BrokenLinkEmailsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -36,6 +40,8 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'Judo.urls'
+
+CORS_ORIGIN_ALLOW_ALL = True
 
 TEMPLATES = [
     {
@@ -107,7 +113,7 @@ STATIC_DIR = os.path.join(BASE_DIR, 'static')
 STATICFILES_DIRS = [STATIC_DIR, ]
 STATIC_URL = '/static/'
 
-MEDIA_URL = '/media/'
+MEDIA_URL = 'media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
 
