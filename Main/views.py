@@ -222,7 +222,7 @@ class VideoAlbumsItems(APIView):
 
     def get(self, request, id, format=None):
         album = self.get_album(id)
-        album_ser = VideoAlbumsFullSerializer(album)
+        album_ser = VideoAlbumsShortSerializer(album)
         videos = self.get_videos(id)
         videos_ser = VideoGalleryShortSerializer(videos, many=True)
         data = {}
@@ -262,8 +262,8 @@ class VideoGalleryDetail(APIView):
         video_ser = VideoGalleryFull_v2Serializer(video)
         data = {}
         data.update(album_ser.data)
-        data['video'] = []
-        data['video'].append(video_ser.data)
+        data['video'] = {}
+        data['video'] = (video_ser.data)
         return Response(data)
 
 

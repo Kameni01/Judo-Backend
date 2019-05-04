@@ -101,6 +101,12 @@ class VideoAlbumsFullSerializer(serializers.ModelSerializer):
         fields = ('id', 'title', 'created')
 
 
+class VideoAlbumsShortSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = VideoAlbums
+        fields = ('id', )
+
+
 
 class VideoGalleryShortSerializer(serializers.ModelSerializer):
     class Meta:

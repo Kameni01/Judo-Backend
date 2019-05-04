@@ -5,6 +5,17 @@ from PIL import Image
 from imagekit.models.fields import ImageSpecField
 from imagekit.processors import ResizeToFit, Adjust, ResizeToFill
 
+import cv2
+
+def gen_cover(video):
+    vidcap = cv2.VideoCapture('media/Main/VideoGallery/{}'.format(video))
+    vidcap.set(0, 1000)
+    success, image = vidcap.read()
+    if success:
+        cv2.imwrite("media/Main/VideoGallery/{}.jpg".format(video), image)
+        return ("media/Main/VideoGallery/{}.jpg".format(video))
+
+
 
 
 class News(models.Model):
@@ -194,6 +205,8 @@ class VideoGallery(models.Model):
     auto_now_add=True)
     video = models.FileField(verbose_name='Видео',
     upload_to='Main/VideoGallery', max_length=256, null=True, blank=True)
+    cover = models.ImageField(verbose_name='Превью', upload_to='Main/covers',
+    height_field=None, width_field=None, max_length=256, blank=True, null=True)
     descriptions = models.TextField(verbose_name='Описание видео',
     null=True, blank=True)
     album = models.ForeignKey(VideoAlbums, verbose_name='Альбом',
@@ -203,6 +216,12 @@ class VideoGallery(models.Model):
         verbose_name = "Видеозапись"
         verbose_name_plural = "Видеозаписи"
         ordering = ["-id"]
+
+    def save(self, *args, **kwargs):
+        if self.video:
+            self.cover = gen_cover(self.video)
+            print(gen_cover(self.video))
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return self.title
