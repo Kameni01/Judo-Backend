@@ -37,9 +37,18 @@ class News(models.Model):
 
 class SportCard(models.Model):
     """Класс карточек спортсменов"""
+    unosha = 'unosha'
+    student = 'student'
+    master = 'master'
+    DOSKA = ((unosha,'Призер юношеских соревнований',), (student, 'Призер студенческих соревнований',), (master, 'Мастер спорта',))
+
     name = models.CharField(verbose_name='Имя', max_length=100)
     family = models.CharField(verbose_name='Фамилия', max_length=100, db_index=True)
-    photo = models.ImageField(verbose_name='Фотография спортсмена', upload_to='Main/Photos', height_field=None, width_field=None, max_length=256, blank=True, null=True)
+    photo = models.ImageField(verbose_name='Фотография спортсмена',
+    upload_to='Main/Photos', height_field=None, width_field=None,
+    max_length=256, blank=True, null=True)
+    status = models.CharField(verbose_name='Сектор доски почета',
+    max_length=60, default=master, choices=DOSKA)
     birthday = models.DateField(verbose_name='Дата рождения')
     description = models.TextField(verbose_name='Описание спортсмена')
 

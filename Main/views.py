@@ -8,6 +8,8 @@ from rest_framework.decorators import api_view
 from rest_framework.reverse import reverse
 from rest_framework.response import Response
 
+from random import choice
+
 from .serializers import *
 from .models import *
 
@@ -58,6 +60,30 @@ class NewsEVENTS(APIView):
 class SportCardList(APIView):
     def get(self, request, format=None):
         obj = SportCard.objects.all()
+        serializer = SportCardListSerializer(obj, many=True)
+        return Response(serializer.data)
+
+
+
+class SportCardListUnosha(APIView):
+    def get(self, request, format=None):
+        obj = SportCard.objects.filter(status='unosha')
+        serializer = SportCardListSerializer(obj, many=True)
+        return Response(serializer.data)
+
+
+
+class SportCardListStudent(APIView):
+    def get(self, request, format=None):
+        obj = SportCard.objects.filter(status='student')
+        serializer = SportCardListSerializer(obj, many=True)
+        return Response(serializer.data)
+
+
+
+class SportCardListMaster(APIView):
+    def get(self, request, format=None):
+        obj = SportCard.objects.filter(status='master')
         serializer = SportCardListSerializer(obj, many=True)
         return Response(serializer.data)
 
@@ -246,7 +272,17 @@ class PhotoAlbumsList(APIView):
     def get(self, request, format=None):
         obj = PhotoAlbums.objects.all()
         serializer = PhotoAlbumsFullSerializer(obj, many=True)
-        return Response(serializer.data)
+        data = []
+        for num, element in enumerate(serializer.data):
+            temp = dict(element)
+            data.append(temp)
+            photos = PhotoGallery.objects.filter(album_id=temp['id'])
+            photo_ser = PhotoGalleryForAlbumSerializer(photos, many=True)
+            photo = dict(choice(photo_ser.data))
+            print(photo)
+            print(data[num])
+            data[num]['prev'] = photo['photo_s']
+        return Response(data)
 
 
 
