@@ -111,7 +111,7 @@ class VideoAlbumsShortSerializer(serializers.ModelSerializer):
 class VideoGalleryShortSerializer(serializers.ModelSerializer):
     class Meta:
         model = VideoGallery
-        fields = ('id', 'title', 'video')
+        fields = ('id', 'title', 'video', 'cover')
 
 
 
