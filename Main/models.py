@@ -5,6 +5,17 @@ from PIL import Image
 from imagekit.models.fields import ImageSpecField
 from imagekit.processors import ResizeToFit, Adjust, ResizeToFill
 
+import cv2
+
+def gen_cover(video):
+    vidcap = cv2.VideoCapture('media/Main/VideoGallery/{}'.format(video))
+    vidcap.set(0, 1000)
+    success, image = vidcap.read()
+    if success:
+        cv2.imwrite("media/Main/VideoGallery/{}.jpg".format(video), image)
+        return ("media/Main/VideoGallery/{}.jpg".format(video))
+
+
 
 
 class News(models.Model):
@@ -37,9 +48,18 @@ class News(models.Model):
 
 class SportCard(models.Model):
     """Класс карточек спортсменов"""
+    unosha = 'unosha'
+    student = 'student'
+    master = 'master'
+    DOSKA = ((unosha,'Призер юношеских соревнований',), (student, 'Призер студенческих соревнований',), (master, 'Мастер спорта',))
+
     name = models.CharField(verbose_name='Имя', max_length=100)
     family = models.CharField(verbose_name='Фамилия', max_length=100, db_index=True)
-    photo = models.ImageField(verbose_name='Фотография спортсмена', upload_to='Main/Photos', height_field=None, width_field=None, max_length=256, blank=True, null=True)
+    photo = models.ImageField(verbose_name='Фотография спортсмена',
+    upload_to='Main/Photos', height_field=None, width_field=None,
+    max_length=256, blank=True, null=True)
+    status = models.CharField(verbose_name='Сектор доски почета',
+    max_length=60, default=master, choices=DOSKA)
     birthday = models.DateField(verbose_name='Дата рождения')
     description = models.TextField(verbose_name='Описание спортсмена')
 
@@ -185,6 +205,8 @@ class VideoGallery(models.Model):
     auto_now_add=True)
     video = models.FileField(verbose_name='Видео',
     upload_to='Main/VideoGallery', max_length=256, null=True, blank=True)
+    cover = models.ImageField(verbose_name='Превью', upload_to='Main/covers',
+    height_field=None, width_field=None, max_length=256, blank=True, null=True)
     descriptions = models.TextField(verbose_name='Описание видео',
     null=True, blank=True)
     album = models.ForeignKey(VideoAlbums, verbose_name='Альбом',
@@ -194,6 +216,12 @@ class VideoGallery(models.Model):
         verbose_name = "Видеозапись"
         verbose_name_plural = "Видеозаписи"
         ordering = ["-id"]
+
+    def save(self, *args, **kwargs):
+        if self.video:
+            self.cover = gen_cover(self.video)
+            print(gen_cover(self.video))
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return self.title
@@ -221,9 +249,9 @@ class PhotoGallery(models.Model):
     created = models.DateField(verbose_name='Дата добавления фото', auto_now_add=True)
     photo = models.ImageField(verbose_name='Фото', upload_to='Main/PhotoGallery',
     height_field=None, width_field=None, max_length=256, blank=True, null=True)
-    photo_s = ImageSpecField([Adjust(contrast=1.2, sharpness=1.1),
-            ResizeToFill(200, 200)], source='photo',
-            format='JPEG', options={'quality': 90})
+    photo_s = ImageSpecField([Adjust(contrast=1.0, sharpness=1.0),
+            ResizeToFill(350, 170)], source='photo',
+            format='JPEG', options={'quality': 100})
     descriptions = models.TextField(verbose_name='Описание фото', null=True,
     blank=True)
     album = models.ForeignKey(PhotoAlbums, verbose_name='Альбом', null=True,

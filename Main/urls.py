@@ -13,6 +13,9 @@ urlpatterns = [
     path('sportcard/human', SportCardList.as_view(), name="sportcard-list"),
     path('sportcard/<int:id>', SportCardDetail.as_view(), name="sportcard-detail"),
     path('sportcard/human/<int:id>', SportCardDetail_v2.as_view(), name="sportcard-detail_v2"),
+    path('sportcard/human/unosha', SportCardListUnosha.as_view(), name="sportcard-unosha"),
+    path('sportcard/human/student', SportCardListStudent.as_view(), name="sportcard-student"),
+    path('sportcard/human/master', SportCardListMaster.as_view(), name="sportcard-master"),
 
     path('achiv/<int:id>', AchievementsDetail.as_view(), name="achievements-detail"),
 

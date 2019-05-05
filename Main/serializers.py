@@ -24,7 +24,14 @@ class NewsFullSerializer(serializers.ModelSerializer):
 class SportCardListSerializer(serializers.ModelSerializer):
     class Meta:
         model = SportCard
-        fields = ('id', 'name', 'family', 'photo')
+        fields = ('id', 'name', 'family', 'photo', 'status')
+
+
+
+class SportCardListDoskaSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = SportCard
+        fields = ('id', 'name', 'family', 'photo', 'status')
 
 
 
@@ -94,11 +101,17 @@ class VideoAlbumsFullSerializer(serializers.ModelSerializer):
         fields = ('id', 'title', 'created')
 
 
+class VideoAlbumsShortSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = VideoAlbums
+        fields = ('id', )
+
+
 
 class VideoGalleryShortSerializer(serializers.ModelSerializer):
     class Meta:
         model = VideoGallery
-        fields = ('id', 'title', 'video')
+        fields = ('id', 'title', 'video', 'cover')
 
 
 
@@ -122,3 +135,11 @@ class PhotoGalleryFull_v2Serializer(serializers.ModelSerializer):
     class Meta:
         model = PhotoGallery
         fields = ('id', 'photo', 'photo_s', 'descriptions')
+
+
+
+class PhotoGalleryForAlbumSerializer(serializers.ModelSerializer):
+    photo_s = serializers.ImageField(allow_null=True, max_length=256, required=False)
+    class Meta:
+        model = PhotoGallery
+        fields = ('id', 'photo_s')
