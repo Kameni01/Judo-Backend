@@ -9,7 +9,7 @@ SECRET_KEY = '0_c7octo2n)=wb3r=ak91dajn25fc&)n!$7=efo%(9h(uy+_wd'
 
 DEBUG = True
 
-ALLOWED_HOSTS = ['82.193.139.237', '192.168.0.100', '127.0.0.1']
+ALLOWED_HOSTS = ['*']
 
 
 INSTALLED_APPS = [
@@ -67,10 +67,9 @@ WSGI_APPLICATION = 'Judo.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'judo',
-        'USER': 'admin',
-        'PASSWORD': 'admin',
-        'HOST': 'localhost',
+        'NAME': 'postgres',
+        'USER': 'postgres',
+        'HOST': 'db',
         'PORT': '5432',
     }
 }
